@@ -7,27 +7,98 @@
 
 import XCTest
 @testable import CombinePlayground
+import Combine
 
 class CombinePlaygroundTests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    private var disposeBag = Set<AnyCancellable>()
+    
+    func testSwitchToLatest() throws {
+        let count = Int.random(in: 3...9)
+        let internalSubject = PassthroughSubject<Int, Never>()
+        let subject = PassthroughSubject<PassthroughSubject<Int, Never>, Never>()
+        let expectation = self.expectation(description: "expectation")
+        expectation.expectedFulfillmentCount = count
+        
+        subject
+            .switchToLatest()
+            .sink { value in
+                expectation.fulfill()
+            }
+            .store(in: &disposeBag)
+        
+        subject.send(internalSubject)
+        (1...count).forEach { _ in internalSubject.send(Int.random(in: 0...9)) }
+        
+        waitForExpectations(timeout: 1)
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    func testSwitchToLatest_Multiple() throws {
+        let count = Int.random(in: 3...9)
+        let internalSubjectA = PassthroughSubject<Int, Never>()
+        let internalSubjectB = PassthroughSubject<Int, Never>()
+        let subject = PassthroughSubject<PassthroughSubject<Int, Never>, Never>()
+        let expectation = self.expectation(description: "expectation")
+        expectation.expectedFulfillmentCount = count
+        
+        subject
+            .switchToLatest()
+            .sink { value in
+                expectation.fulfill()
+            }
+            .store(in: &disposeBag)
+        
+        subject.send(internalSubjectA)
+        subject.send(internalSubjectB)
+        (1...count).forEach { _ in internalSubjectA.send(Int.random(in: 0...9)) }
+        (1...count).forEach { _ in internalSubjectB.send(Int.random(in: 0...9)) }
+        
+        waitForExpectations(timeout: 1)
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    
+    func testFlatMap() throws {
+        let count = Int.random(in: 3...9)
+        let internalSubject = PassthroughSubject<Int, Never>()
+        let subject = PassthroughSubject<PassthroughSubject<Int, Never>, Never>()
+        let expectation = self.expectation(description: "expectation")
+        expectation.expectedFulfillmentCount = count
+        
+        subject
+            .flatMap {
+                $0
+            }
+            .sink { value in
+                expectation.fulfill()
+            }
+            .store(in: &disposeBag)
+        
+        subject.send(internalSubject)
+        (1...count).forEach { _ in internalSubject.send(Int.random(in: 0...9)) }
+        
+        waitForExpectations(timeout: 1)
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    
+    func testFlatMap_Multiple() throws {
+        let count = Int.random(in: 3...9)
+        let internalSubjectA = PassthroughSubject<Int, Never>()
+        let internalSubjectB = PassthroughSubject<Int, Never>()
+        let subject = PassthroughSubject<PassthroughSubject<Int, Never>, Never>()
+        let expectation = self.expectation(description: "expectation")
+        expectation.expectedFulfillmentCount = 2 * count
+        
+        subject
+            .flatMap {
+                $0
+            }
+            .sink { value in
+                expectation.fulfill()
+            }
+            .store(in: &disposeBag)
+        
+        subject.send(internalSubjectA)
+        subject.send(internalSubjectB)
+        (1...count).forEach { _ in internalSubjectA.send(Int.random(in: 0...9)) }
+        (1...count).forEach { _ in internalSubjectB.send(Int.random(in: 0...9)) }
+        
+        waitForExpectations(timeout: 1)
     }
-
 }
