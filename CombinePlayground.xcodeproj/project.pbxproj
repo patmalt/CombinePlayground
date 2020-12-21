@@ -13,6 +13,7 @@
 		970420392541C63C004C8042 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 970420382541C63C004C8042 /* Preview Assets.xcassets */; };
 		970420442541C63C004C8042 /* CombinePlaygroundTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970420432541C63C004C8042 /* CombinePlaygroundTests.swift */; };
 		9704204F2541C63C004C8042 /* CombinePlaygroundUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9704204E2541C63C004C8042 /* CombinePlaygroundUITests.swift */; };
+		97413FF625913C8600CFD482 /* SubscribeOnReceiveOnTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97413FF525913C8600CFD482 /* SubscribeOnReceiveOnTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,7 @@
 		9704204A2541C63C004C8042 /* CombinePlaygroundUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CombinePlaygroundUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9704204E2541C63C004C8042 /* CombinePlaygroundUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombinePlaygroundUITests.swift; sourceTree = "<group>"; };
 		970420502541C63C004C8042 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		97413FF525913C8600CFD482 /* SubscribeOnReceiveOnTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeOnReceiveOnTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 			children = (
 				970420432541C63C004C8042 /* CombinePlaygroundTests.swift */,
 				970420452541C63C004C8042 /* Info.plist */,
+				97413FF525913C8600CFD482 /* SubscribeOnReceiveOnTests.swift */,
 			);
 			path = CombinePlaygroundTests;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97413FF625913C8600CFD482 /* SubscribeOnReceiveOnTests.swift in Sources */,
 				970420442541C63C004C8042 /* CombinePlaygroundTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
